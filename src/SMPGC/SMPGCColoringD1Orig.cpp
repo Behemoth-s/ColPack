@@ -73,7 +73,7 @@ int SMPGCColoring::D1_OMP_GM3P_orig(int nT, int&colors, vector<int>&vtxColors) {
             for(int iw=vtxPtr[v]; iw!=vtxPtr[v+1]; iw++){ 
                 const auto w = vtxVal[iw];
                 if(v<w && vc == vtxColors[w]) {
-                    auto position =__sync_fetch_and_add(&qsize, 1); //increment the counter
+                    auto position = ++qsize; //increment the counter
                     conflictQ[position] = v;
                     vtxColors[v] = -1;  //Will prevent v from being in conflict in another pairing
                     break;
@@ -195,7 +195,7 @@ int SMPGCColoring::D1_OMP_GMMP_orig(int nT, int&colors, vector<int>&vtxColors) {
             for(int iw=vtxPtr[v]; iw!=vtxPtr[v+1]; iw++) {
                 const auto w = vtxVal[iw];
                 if(v<w && vc==vtxColors[w]){
-                    auto position = __sync_fetch_and_add(&uncolored_nodes, 1);
+                    auto position = ++uncolored_nodes;
                     conflictQ[position]=v;
                     vtxColors[v] = -1;
                     break;
